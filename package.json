@@ -1,0 +1,36 @@
+{
+  "name": "taiko-react",
+  "version": "1.0.0",
+  "description": "React selectors for Taiko",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha",
+    "watch": "coffee -o lib/ -ctw src/"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tkshnwesper/taiko-react.git"
+  },
+  "keywords": [
+    "taiko",
+    "react"
+  ],
+  "author": "Saurabh M. Machave",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tkshnwesper/taiko-react/issues"
+  },
+  "homepage": "https://github.com/tkshnwesper/taiko-react#readme",
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "coffeescript": "^2.4.1"
+  },
+  "dependencies": {
+    "browser-env": "^3.2.6",
+    "resq": "^1.2.1"
+  }
+}
