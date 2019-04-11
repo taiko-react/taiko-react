@@ -19,7 +19,7 @@ resolveComponent = (child) ->
       props: child.props
     }
 
-  recurseOverChildren = (child, depth) ->
+  recurseOverChildren = (child, depth = 0) ->
     if depth < maxDepth
       { children } = child
       childrenTree = Array.from children
@@ -29,7 +29,7 @@ resolveComponent = (child) ->
     else
       return getChild child
   
-  recurseOverChildren child, 0
+  recurseOverChildren child
 .toString()
 
 resolveComponents = (children) ->
@@ -84,10 +84,10 @@ export react = (selector, options = defaultOptions) ->
 
   client = await taiko.client()
 
-  result = await client.Runtime.evaluate({
+  result = JSON.stringify await client.Runtime.evaluate({
     expression: expression,
     returnByValue: true,
     awaitPromise: true
   })
   
-  console.log JSON.stringify result
+  console.log result

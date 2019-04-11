@@ -4,8 +4,10 @@
   "description": "React selectors for Taiko",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha",
-    "watch": "coffee -o lib/ -ctw src/"
+    "test": "mocha \"test/**/*.{js,coffee}\"",
+    "test:watch": "mocha --watch --watch-extensions js,coffee \"test/**/*.{js,coffee}\"",
+    "build:watch": "coffee -o lib/ -ctw src/",
+    "build": "coffee -o lib/ -ct src/"
   },
   "files": [
     "lib"
@@ -27,10 +29,12 @@
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
-    "coffeescript": "^2.4.1"
+    "chai": "^4.2.0",
+    "coffeescript": "^2.4.1",
+    "mocha": "^6.1.2",
+    "sinon": "^7.3.1"
   },
   "dependencies": {
-    "browser-env": "^3.2.6",
     "resq": "^1.2.1"
   }
 }
