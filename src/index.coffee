@@ -45,7 +45,7 @@ defaultOptions = {
 export react = (selector, options = defaultOptions) ->
   options = { ...defaultOptions, ...options }
 
-  if not selector?
+  unless selector? and selector isnt undefined
     throw new Error 'Selector needs to be either a string or an object'
   
   if typeof selector is 'string'
