@@ -84,14 +84,20 @@ export react = (selector, options = defaultOptions) ->
 
   client = await taiko.client()
 
-  { type, result } = JSON.stringify await client.Runtime.evaluate({
+  {
+    result: {
+      value = (if options?multiple then [] else {}),
+      type
+    }
+  } = await client.Runtime.evaluate({
     expression: expression,
     returnByValue: true,
     awaitPromise: true
   })
 
-  console.log type, result
-  
   return {
-
+    exists:
+      if options?.multiple
+      then Boolean value.length
+      else Boolean (Object.keys value).length
   }

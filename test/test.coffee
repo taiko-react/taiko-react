@@ -49,3 +49,32 @@ describe 'Validation', () ->
     catch error
       assert.equal error.message,
       'Could not ascertain the type of this React component'
+
+describe '#exists', () ->
+  it 'checks whether single component exists', () ->
+    clientHandler createTaikoInstance fake.returns {
+      result: {
+        value: {
+          node: {},
+          isFragment: false,
+          state: {},
+          props: {}
+        },
+        type: 'object'
+      }
+    }
+    assert.isOk (await react 'Meow').exists
+
+  it 'checks whether multiple components exist', () ->
+    clientHandler createTaikoInstance fake.returns {
+      result: {
+        value: [{
+          node: {},
+          isFragment: false,
+          state: {},
+          props: {}
+        }],
+        type: 'array'
+      }
+    }
+    assert.isOk (await react 'Meow').exists
