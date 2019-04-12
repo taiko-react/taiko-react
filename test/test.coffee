@@ -26,7 +26,10 @@ describe 'Validation', () ->
   
   it 'rejects a selector that is an object but not a React element', () ->
     try
-      await react createElement 'Cat'
+      await react {
+        meow: 'Cat'
+      }
+      assert.fail()
     catch error
       assert.equal error.message,
       'Could not ascertain the type of this React component'
@@ -38,6 +41,7 @@ describe 'Validation', () ->
   it 'rejects a selector that is neither an object nor a string', () ->
     try
       await react 1
+      assert.fail()
     catch error
       assert.equal error.message,
       'Could not ascertain the type of this React component'
