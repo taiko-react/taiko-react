@@ -13,11 +13,11 @@ createTaikoInstance = (fakeFunction = fake()) ->
   }
 
 describe 'Validation', () ->
-  beforeEachHook = () ->
+  beforeHook = () ->
     fakeFn = fake.returns { type: 'object', result: {} }
     clientHandler createTaikoInstance fakeFn
-  beforeEach beforeEachHook
-  
+  before beforeHook
+
   it 'rejects a selector that does not exist', () ->
     try
       await react()
