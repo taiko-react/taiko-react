@@ -1,4 +1,4 @@
-# taiko-react
+# taiko-react [![Build Status](https://travis-ci.org/tkshnwesper/taiko-react.svg?branch=master)](https://travis-ci.org/tkshnwesper/taiko-react)
 
 `taiko-react` allows you to select React components on the site you want to perform tests on.
 
