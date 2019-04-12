@@ -50,10 +50,10 @@ export react = (selector, options = defaultOptions) ->
   
   if typeof selector is 'string'
     selectorString = selector
-  else if typeof selector is 'object' and 'name' of selector
-    selectorString = selector.name
+  else if typeof selector is 'object' and 'type' of selector
+    selectorString = selector.type
   else
-    throw new Error 'Could not ascertain the name of this React component'
+    throw new Error 'Could not ascertain the type of this React component'
   
   if 'depth' of options and typeof options.depth is 'number'
     depth = options.depth
