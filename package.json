@@ -21,7 +21,7 @@
     "react"
   ],
   "author": "Saurabh M. Machave",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/tkshnwesper/taiko-react/issues"
   },
