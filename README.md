@@ -1,4 +1,4 @@
-# taiko-react [![Build Status](https://travis-ci.org/tkshnwesper/taiko-react.svg?branch=master)](https://travis-ci.org/tkshnwesper/taiko-react) [![Coverage Status](https://coveralls.io/repos/github/tkshnwesper/taiko-react/badge.svg?branch=master)](https://coveralls.io/github/tkshnwesper/taiko-react?branch=master)
+# taiko-react [![Build Status](https://travis-ci.org/tkshnwesper/taiko-react.svg?branch=master)](https://travis-ci.org/tkshnwesper/taiko-react) [![Coverage Status](https://coveralls.io/repos/github/tkshnwesper/taiko-react/badge.svg?branch=master)](https://coveralls.io/github/tkshnwesper/taiko-react?branch=master) [![Known Vulnerabilities](https://snyk.io/test/github/tkshnwesper/taiko-react/badge.svg?targetFile=package.json)](https://snyk.io/test/github/tkshnwesper/taiko-react?targetFile=package.json)
 
 `taiko-react` allows you to select React components on the site you want to perform tests on.
 
