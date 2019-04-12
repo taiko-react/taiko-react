@@ -7,7 +7,8 @@
     "test": "mocha \"test/**/*.{js,coffee}\"",
     "test:watch": "mocha --watch --watch-extensions js,coffee \"test/**/*.{js,coffee}\"",
     "build:watch": "coffee -o lib/ -ctw src/",
-    "build": "coffee -o lib/ -ct src/"
+    "build": "coffee -o lib/ -ct src/",
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
   },
   "files": [
     "lib"
@@ -31,7 +32,9 @@
     "@babel/preset-env": "^7.4.3",
     "chai": "^4.2.0",
     "coffeescript": "^2.4.1",
+    "coveralls": "^3.0.3",
     "mocha": "^6.1.2",
+    "nyc": "^13.3.0",
     "react": "^16.8.6",
     "sinon": "^7.3.1"
   },
