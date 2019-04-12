@@ -3,17 +3,21 @@
 { fake } = require 'sinon'
 { clientHandler, react } = require '../lib'
 
-before () ->
-  taiko = {
+createTaikoInstance = (fakeFunction = fake()) ->
+  return {
     client: () -> await {
       Runtime: {
-        evaluate: fake()
+        evaluate: fakeFunction
       }
     }
   }
-  clientHandler taiko
 
 describe 'Validation', () ->
+  beforeEachHook = () ->
+    fakeFn = fake.returns { type: 'object', result: {} }
+    clientHandler createTaikoInstance fakeFn
+  beforeEach beforeEachHook
+  
   it 'rejects a selector that does not exist', () ->
     try
       await react()

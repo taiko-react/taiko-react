@@ -84,10 +84,14 @@ export react = (selector, options = defaultOptions) ->
 
   client = await taiko.client()
 
-  result = JSON.stringify await client.Runtime.evaluate({
+  { type, result } = JSON.stringify await client.Runtime.evaluate({
     expression: expression,
     returnByValue: true,
     awaitPromise: true
   })
+
+  console.log type, result
   
-  console.log result
+  return {
+
+  }
