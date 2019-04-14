@@ -1,4 +1,5 @@
 import fs from 'fs'
+import { isValidElement } from 'react'
 
 export ID = 'react'
 
@@ -12,11 +13,20 @@ export clientHandler = (taikoInstance) ->
   resq = fs.readFileSync resqLocation
 
 resolveComponent = (child) ->
+  convertReactObjectsToChildren = (objectToConvert) ->
+    returnObject = {}
+    for key in objectToConvert
+      value = objectToConvert[key]
+      if isValidElement value
+        returnObject[key] = getChild value
+      returnObject[key] = value
+    return returnObject
+
   getChild = (child) -> {
       name: child.name
       isFragment: child.isFragment
-      state: child.state
-      props: child.props
+      state: convertReactObjectsToChildren child.props
+      props: convertReactObjectsToChildren child.props
     }
 
   recurseOverChildren = (child, depth = 0) ->
@@ -50,7 +60,7 @@ export react = (selector, options = defaultOptions) ->
   
   if typeof selector is 'string'
     selectorString = selector
-  else if typeof selector is 'object' and 'type' of selector
+  else if isValidElement selector
     selectorString = selector.type
   else
     throw new Error 'Could not ascertain the type of this React component'
