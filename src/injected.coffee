@@ -1,32 +1,44 @@
-export resolveComponent = (child) ->
-  convertReactObjectsToChildren = (objectToConvert) ->
-    returnObject = {}
-    for key in objectToConvert
-      value = objectToConvert[key]
-      if isValidElement value
-        returnObject[key] = getChild value
-      returnObject[key] = value
-    returnObject
+import { isValidElement as reactIsValidElement } from 'react'
+import { maxDepth as maxDepthConstant } from './constants'
 
-  getChild = (child) -> {
-      name: child.name
-      isFragment: child.isFragment
-      state: convertReactObjectsToChildren child.props
-      props: convertReactObjectsToChildren child.props
-    }
+export resolveComponent = (
+  maxDepth = maxDepthConstant,
+  isValidElement = reactIsValidElement
+) ->
+  (child) ->
+    convertReactObjectsToChildren = (objectToConvert) ->
+      returnObject = {}
+      for key, value of objectToConvert
+        returnObject[key] = if isValidElement value then getChild value else value
+      returnObject
 
-  recurseOverChildren = (child, depth = 0) ->
-    if depth < maxDepth
-      { children } = child
-      childrenTree = Array.from children
-        .map (innerChild) ->
-          recurseOverChildren innerChild, depth + 1
-      { children: childrenTree, ...getChild child }
-    else
-      getChild child
-  
-  recurseOverChildren child
+    getChild = (child) -> {
+        name: child.name
+        isFragment: child.isFragment
+        state: convertReactObjectsToChildren child.state
+        props: convertReactObjectsToChildren child.props
+      }
 
-export resolveComponents = (children) ->
-  Array.from children
-    .map resolveComponent
+    recurseOverChildren = (child, depth = 0) ->
+      if depth < maxDepth
+        { children } = child
+        childrenTree =
+          if children?
+          then (
+            Array.from children
+              .map (innerChild) ->
+                recurseOverChildren innerChild, depth + 1
+          )
+          else []
+        { children: childrenTree, ...getChild child }
+      else
+        getChild child
+    
+    recurseOverChildren child
+
+proxyResolveComponent = resolveComponent
+
+export resolveComponents = (resolveComponent = proxyResolveComponent) ->
+  (children) ->
+    Array.from children
+      .map resolveComponent

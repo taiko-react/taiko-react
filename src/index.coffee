@@ -22,7 +22,7 @@ defaultOptions = {
 export react = (selector, options = defaultOptions) ->
   options = { ...defaultOptions, ...options }
 
-  unless selector? and selector isnt undefined
+  unless selector?
     throw new Error 'Selector needs to be either a string or an object'
   
   if typeof selector is 'string'
@@ -52,8 +52,8 @@ export react = (selector, options = defaultOptions) ->
     #{ resq }
     #{ isValidElement }
     const maxDepth = #{ depth };
-    const resolveComponent = #{ resolveComponent };
-    const resolveComponents = #{ resolveComponents };
+    const resolveComponent = #{ resolveComponent() };
+    const resolveComponents = #{ resolveComponents() };
     await window.resq.waitToLoadReact();
     result = window.resq.#{ selectorToUse }('#{ selectorString }');
     return #{ componentResolver }(result);

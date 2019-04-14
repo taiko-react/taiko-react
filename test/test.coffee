@@ -2,6 +2,7 @@
 { assert } = require 'chai'
 { fake } = require 'sinon'
 { clientHandler, react } = require '../lib'
+{ resolveComponent, resolveComponents } = require '../lib/injected'
 
 createTaikoInstance = (fakeFunction = fake()) ->
   return {
@@ -96,3 +97,14 @@ describe '#exists', () ->
       }
     }
     assert.isFalse (await react 'NoMeow', { multiple: true }).exists()
+
+describe 'Injected code', () ->
+  describe '#resolveComponent', () ->
+    it 'gets the required details for a child', () ->
+      child = {
+        name: 'name',
+        isFragment: false,
+        state: { stateProperty: 'state' },
+        props: { propProperty: 'prop' }
+      }
+      assert.deepEqual (resolveComponent(0) child), child
