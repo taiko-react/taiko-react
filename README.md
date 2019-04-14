@@ -17,15 +17,23 @@ npm i taiko-react
 
 ## Usage
 
+Load up the plugin and navigate to the React powered webpage ⚡️
+
+```js
+const { openBrowser, goto, loadPlugin } = require('taiko')
+const { ID, clientHandler, react } = require('taiko-react')
+
+await loadPlugin(ID, clientHandler)
+
+await openBrowser()
+await goto("http://localhost:8080")
+```
+
+Now you may use various selectors to find React elements on the page 🔎
+
 ### Select using a **string** selector
 
 ```js
-const { openBrowser, goto, closeBrowser, loadPlugin } = require('taiko');
-const { ID, clientHandler, react } = require('taiko-react');
-
-await loadPlugin(ID, clientHandler)
-await openBrowser();
-await goto("http://localhost:8080");
 const selection = await react('App')
 ```
 
