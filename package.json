@@ -8,7 +8,8 @@
     "test:watch": "mocha --watch --watch-extensions js,coffee \"test/**/*.{js,coffee}\"",
     "build:watch": "coffee -o lib/ -ctw src/",
     "build": "coffee -o lib/ -ct src/",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov > lcov.info"
   },
   "files": [
     "lib"
