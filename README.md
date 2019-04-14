@@ -36,12 +36,12 @@ const selection = await react(<App />)
 
 ## API
 
-### `.exists` _-> `Boolean`_
+### `.exists()` _-> `Boolean`_
 
 ```jsx
 const selection = await react(<App />)
 
-assert(selection.exists)
+assert(selection.exists())
 ```
 
 Made with 💟 + ☕️ from 🇮🇳

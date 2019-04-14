@@ -106,7 +106,7 @@ export react = (selector, options = defaultOptions) ->
   })
 
   return {
-    exists:
+    exists: () ->
       if options?.multiple
       then Boolean value.length
       else Boolean (Object.keys value).length

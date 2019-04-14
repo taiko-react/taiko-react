@@ -63,7 +63,16 @@ describe '#exists', () ->
         type: 'object'
       }
     }
-    assert.isOk (await react 'Meow').exists
+    assert.isTrue (await react 'Meow').exists()
+  
+  it 'checks that a single component does not exist', () ->
+    clientHandler createTaikoInstance fake.returns {
+      result: {
+        value: {},
+        type: 'object'
+      }
+    }
+    assert.isFalse (await react 'NoMeow').exists()
 
   it 'checks whether multiple components exist', () ->
     clientHandler createTaikoInstance fake.returns {
@@ -77,4 +86,13 @@ describe '#exists', () ->
         type: 'array'
       }
     }
-    assert.isOk (await react 'Meow').exists
+    assert.isTrue (await react 'Meow', { multiple: true }).exists()
+  
+  it 'checks that multiple components do not exist', () ->
+    clientHandler createTaikoInstance fake.returns {
+      result: {
+        value: [],
+        type: 'array'
+      }
+    }
+    assert.isFalse (await react 'NoMeow', { multiple: true }).exists()
