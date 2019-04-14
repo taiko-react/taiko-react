@@ -1,51 +1,18 @@
 import fs from 'fs'
-import { isValidElement } from 'react'
+import { isValidElement as reactIsValidElement } from 'react'
+import { resolveComponent, resolveComponents } from './injected'
+import { maxDepth } from './constants'
+import { isValidElement } from './helpers'
 
 export ID = 'react'
 
 taiko = undefined
 resq = undefined
-maxDepth = 1
 
 export clientHandler = (taikoInstance) ->
   taiko = taikoInstance
   resqLocation = require.resolve 'resq'
   resq = fs.readFileSync resqLocation
-
-resolveComponent = (child) ->
-  convertReactObjectsToChildren = (objectToConvert) ->
-    returnObject = {}
-    for key in objectToConvert
-      value = objectToConvert[key]
-      if isValidElement value
-        returnObject[key] = getChild value
-      returnObject[key] = value
-    return returnObject
-
-  getChild = (child) -> {
-      name: child.name
-      isFragment: child.isFragment
-      state: convertReactObjectsToChildren child.props
-      props: convertReactObjectsToChildren child.props
-    }
-
-  recurseOverChildren = (child, depth = 0) ->
-    if depth < maxDepth
-      { children } = child
-      childrenTree = Array.from children
-        .map (innerChild) ->
-          recurseOverChildren innerChild, depth + 1
-      return { children: childrenTree, ...getChild child }
-    else
-      return getChild child
-  
-  recurseOverChildren child
-.toString()
-
-resolveComponents = (children) ->
-  Array.from children
-    .map resolveComponent
-.toString()
 
 defaultOptions = {
   multiple: false
@@ -60,7 +27,7 @@ export react = (selector, options = defaultOptions) ->
   
   if typeof selector is 'string'
     selectorString = selector
-  else if isValidElement selector
+  else if reactIsValidElement selector
     selectorString = selector.type
   else
     throw new Error 'Could not ascertain the type of this React component'
@@ -83,6 +50,7 @@ export react = (selector, options = defaultOptions) ->
   expression = "
   (async function() {
     #{ resq }
+    #{ isValidElement }
     const maxDepth = #{ depth };
     const resolveComponent = #{ resolveComponent };
     const resolveComponents = #{ resolveComponents };
@@ -94,16 +62,18 @@ export react = (selector, options = defaultOptions) ->
 
   client = await taiko.client()
 
+  result = await client.Runtime.evaluate({
+    expression: expression,
+    returnByValue: true,
+    awaitPromise: true
+  })
+
   {
     result: {
       value = (if options?multiple then [] else {}),
       type
     }
-  } = await client.Runtime.evaluate({
-    expression: expression,
-    returnByValue: true,
-    awaitPromise: true
-  })
+  } = result
 
   return {
     exists: () ->
