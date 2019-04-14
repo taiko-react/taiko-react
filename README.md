@@ -20,6 +20,7 @@ npm i taiko-react
 ### Select using a **string** selector
 
 ```js
+const { openBrowser, goto, closeBrowser, loadPlugin } = require('taiko');
 const { ID, clientHandler, react } = require('taiko-react');
 
 await loadPlugin(ID, clientHandler)
