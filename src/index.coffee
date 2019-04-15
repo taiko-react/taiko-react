@@ -49,7 +49,7 @@ export react = (selector, options = defaultOptions) ->
   expression = "
   (async function() {
     #{ resq }
-    #{ isValidElement }
+    const isValidElement = #{ isValidElement };
     const maxDepth = #{ depth };
     const resolveComponent = #{ resolveComponent() };
     const resolveComponents = #{ resolveComponents() };
