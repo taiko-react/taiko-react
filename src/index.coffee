@@ -1,5 +1,4 @@
 import fs from 'fs'
-import { isValidElement as reactIsValidElement } from 'react'
 import { resolveComponent, resolveComponents } from './injected'
 import { maxDepth } from './constants'
 import { isValidElement } from './helpers'
@@ -27,7 +26,7 @@ export react = (selector, options = defaultOptions) ->
   
   if typeof selector is 'string'
     selectorString = selector
-  else if reactIsValidElement selector
+  else if isValidElement selector
     selectorString = selector.type
   else
     throw new Error 'Could not ascertain the type of this React component'
