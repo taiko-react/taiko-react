@@ -102,15 +102,61 @@ describe 'API', () ->
 
 describe 'Injected code', () ->
   describe '#resolveComponent', () ->
+    child = {
+      name: 'name',
+      isFragment: false,
+      state: { stateProperty: 'state' },
+      props: { propProperty: 'prop' }
+    }
     it 'gets the required details for a child', () ->
-      child = {
-        name: 'name',
-        isFragment: false,
-        state: { stateProperty: 'state' },
-        props: { propProperty: 'prop' }
-      }
       assert.deepEqual (resolveComponent(0) child), child
-
+    
+    it 'ignores extraneous properties', () ->
+      newChild = { child..., something: 'else' }
+      assert.deepEqual (resolveComponent(0) newChild), child
+    
+    it 'gets children', () ->
+      newChild = { children: [child], child... }
+      assert.deepEqual (resolveComponent() newChild), newChild
+    
+    it 'converts react element in prop to child', () ->
+      reactChild = {
+        child...,
+        props: {
+          propProperty: {
+            child...,
+            node: Object()
+            $$typeof: Symbol.for('react.element')
+          }
+        }
+      }
+      expectedChild = {
+        child...,
+        props: {
+          propProperty: child
+        }
+      }
+      assert.deepEqual (resolveComponent(0) reactChild), expectedChild
+    
+    it 'converts react element in state to child', () ->
+      reactChild = {
+        child...,
+        state: {
+          stateProperty: {
+            child...,
+            node: Object()
+            $$typeof: Symbol.for('react.element')
+          }
+        }
+      }
+      expectedChild = {
+        child...,
+        state: {
+          stateProperty: child
+        }
+      }
+      assert.deepEqual (resolveComponent(0) reactChild), expectedChild
+    
 describe 'Helpers', () ->
   describe '#isValidElement', () ->
     it 'confirms a valid react element', () ->
@@ -118,11 +164,3 @@ describe 'Helpers', () ->
     
     it 'busts an invalid react element', () ->
       assert.isFalse isValidElement { type: 'Wow' }
-    
-    it 'confirms a valid react element even when Symbol is not available', () ->
-      _for = global.Symbol.for
-      global.Symbol = Object.assign {}, global.Symbol, { for: null }
-      element = createElement 'Wow'
-      element = Object.assign {}, element, { $$typeof: 0xeac7 }
-      assert.isTrue isValidElement element
-      global.Symbol.for = _for
