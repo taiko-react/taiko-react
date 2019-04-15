@@ -3,6 +3,7 @@
 { fake } = require 'sinon'
 { clientHandler, react } = require '../lib'
 { resolveComponent, resolveComponents } = require '../lib/injected'
+{ isValidElement } = require '../lib/helpers'
 
 createTaikoInstance = (fakeFunction = fake()) ->
   return {
@@ -51,52 +52,53 @@ describe 'Validation', () ->
       assert.equal error.message,
       'Could not ascertain the type of this React component'
 
-describe '#exists', () ->
-  it 'checks whether single component exists', () ->
-    clientHandler createTaikoInstance fake.returns {
-      result: {
-        value: {
-          node: {},
-          isFragment: false,
-          state: {},
-          props: {}
-        },
-        type: 'object'
+describe 'API', () ->
+  describe '#exists', () ->
+    it 'checks whether single component exists', () ->
+      clientHandler createTaikoInstance fake.returns {
+        result: {
+          value: {
+            node: {},
+            isFragment: false,
+            state: {},
+            props: {}
+          },
+          type: 'object'
+        }
       }
-    }
-    assert.isTrue (await react 'Meow').exists()
-  
-  it 'checks that a single component does not exist', () ->
-    clientHandler createTaikoInstance fake.returns {
-      result: {
-        value: {},
-        type: 'object'
+      assert.isTrue (await react 'Meow').exists()
+    
+    it 'checks that a single component does not exist', () ->
+      clientHandler createTaikoInstance fake.returns {
+        result: {
+          value: {},
+          type: 'object'
+        }
       }
-    }
-    assert.isFalse (await react 'NoMeow').exists()
+      assert.isFalse (await react 'NoMeow').exists()
 
-  it 'checks whether multiple components exist', () ->
-    clientHandler createTaikoInstance fake.returns {
-      result: {
-        value: [{
-          node: {},
-          isFragment: false,
-          state: {},
-          props: {}
-        }],
-        type: 'array'
+    it 'checks whether multiple components exist', () ->
+      clientHandler createTaikoInstance fake.returns {
+        result: {
+          value: [{
+            node: {},
+            isFragment: false,
+            state: {},
+            props: {}
+          }],
+          type: 'array'
+        }
       }
-    }
-    assert.isTrue (await react 'Meow', { multiple: true }).exists()
-  
-  it 'checks that multiple components do not exist', () ->
-    clientHandler createTaikoInstance fake.returns {
-      result: {
-        value: [],
-        type: 'array'
+      assert.isTrue (await react 'Meow', { multiple: true }).exists()
+    
+    it 'checks that multiple components do not exist', () ->
+      clientHandler createTaikoInstance fake.returns {
+        result: {
+          value: [],
+          type: 'array'
+        }
       }
-    }
-    assert.isFalse (await react 'NoMeow', { multiple: true }).exists()
+      assert.isFalse (await react 'NoMeow', { multiple: true }).exists()
 
 describe 'Injected code', () ->
   describe '#resolveComponent', () ->
@@ -108,3 +110,11 @@ describe 'Injected code', () ->
         props: { propProperty: 'prop' }
       }
       assert.deepEqual (resolveComponent(0) child), child
+
+describe 'Helpers', () ->
+  describe '#isValidElement', () ->
+    it 'confirms a valid react element', () ->
+      assert.isTrue isValidElement createElement 'Wow'
+    
+    it 'busts an invalid react element', () ->
+      assert.isFalse isValidElement { type: 'Wow' }
