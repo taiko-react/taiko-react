@@ -118,3 +118,11 @@ describe 'Helpers', () ->
     
     it 'busts an invalid react element', () ->
       assert.isFalse isValidElement { type: 'Wow' }
+    
+    it 'confirms a valid react element even when Symbol is not available', () ->
+      _for = global.Symbol.for
+      global.Symbol = Object.assign {}, global.Symbol, { for: null }
+      element = createElement 'Wow'
+      element = Object.assign {}, element, { $$typeof: 0xeac7 }
+      assert.isTrue isValidElement element
+      global.Symbol.for = _for
