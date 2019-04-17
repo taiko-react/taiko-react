@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha \"test/**/*.{js,coffee}\"",
     "test:watch": "mocha --watch --watch-extensions js,coffee \"test/**/*.{js,coffee}\"",
+    "functional-test": "mocha \"functional_test/test/**/*.{js,coffee}\"",
     "build:watch": "coffee -o lib/ -ctw src/",
     "build": "coffee -o lib/ -ct src/",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
@@ -34,12 +35,13 @@
     "chai": "^4.2.0",
     "coffeescript": "^2.4.1",
     "coveralls": "^3.0.3",
-    "mocha": "^6.1.2",
+    "mocha": "^6.1.3",
     "nyc": "^14.0.0",
     "react": "^16.8.6",
-    "sinon": "^7.3.1"
+    "sinon": "^7.3.1",
+    "taiko": "git+ssh://git@github.com/getgauge/taiko.git"
   },
   "dependencies": {
-    "resq": "^1.2.1"
+    "resq": "^1.3.1"
   }
 }

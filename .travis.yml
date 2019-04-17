@@ -2,9 +2,15 @@ language: node_js
 node_js:
   - "10"
 
+before_script:
+  - "cd functional_test/app"
+  - "npm install"
+  - "cd ../.."
+
 script:
   - "npm run build"
   - "npm test"
+  - "npm functional-test"
 
 after_script:
   - "npm run coveralls"
