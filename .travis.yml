@@ -10,7 +10,7 @@ before_script:
 script:
   - "npm run build"
   - "npm test"
-  - "npm functional-test"
+  - "npm run functional-test"
 
 after_script:
   - "npm run coveralls"
