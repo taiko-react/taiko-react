@@ -1,0 +1,7 @@
+fileignoreconfig:
+- filename: functional_test/app/package-lock.json
+  checksum: 640a52039557714fa379adb30033f0c9e555270c37febb3a588234439fec3be1
+  ignore_detectors: []
+- filename: package-lock.json
+  checksum: 595e43bd0967bded4264324c29fd4612e4f76474a6cd23d19625189b4216e328
+  ignore_detectors: []
