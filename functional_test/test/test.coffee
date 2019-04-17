@@ -1,11 +1,22 @@
 { spawn, spawnSync } = require 'child_process'
+{ get } = require 'http'
 { openBrowser, goto, closeBrowser, loadPlugin } = require 'taiko'
 { assert } = require 'chai'
 { createElement } = require 'react'
 { ID, clientHandler, react } = require '../../lib'
 
+URL = "http://localhost:3000"
+
 killServer = () ->
   spawnSync 'sh', ["#{ __dirname }/../stop_server.sh"]
+
+waitForServer = () ->
+  await new Promise((resolve) -> setTimeout resolve, 1000)
+  try
+    await new Promise((resolve, reject) ->
+      get(URL, resolve).on('error', reject))
+  catch
+    await waitForServer()
 
 beforeHook = () ->
   this.timeout(30 * 1000)
@@ -13,8 +24,8 @@ beforeHook = () ->
   try
     await loadPlugin ID, clientHandler
     await openBrowser()
-    await new Promise((resolve) -> setTimeout resolve, 10000)
-    await goto "http://localhost:3000"
+    await waitForServer()
+    await goto URL
   catch error
     console.error error
     killServer()
