@@ -19,7 +19,7 @@ waitForServer = () ->
     await waitForServer()
 
 beforeHook = () ->
-  this.timeout(30 * 1000)
+  this.timeout(100 * 1000)
   spawn 'sh', ["#{ __dirname }/../start_server.sh"]
   try
     await loadPlugin ID, clientHandler
