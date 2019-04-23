@@ -53,4 +53,14 @@ const selection = await react(<App />)
 assert(selection.exists())
 ```
 
+## Functional tests
+
+### Status
+
+[![Build Status](https://travis-ci.org/taiko-react/taiko-react-functional-tests.svg?branch=master)](https://travis-ci.org/taiko-react/taiko-react-functional-tests)
+
+### Repository
+
+[taiko-react/taiko-react-functional-tests](https://github.com/taiko-react/taiko-react-functional-tests)
+
 Made with 💟 + ☕️ from 🇮🇳
