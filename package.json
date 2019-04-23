@@ -6,7 +6,6 @@
   "scripts": {
     "test": "mocha \"test/**/*.{js,coffee}\"",
     "test:watch": "mocha --watch --watch-extensions js,coffee \"test/**/*.{js,coffee}\"",
-    "functional-test": "mocha \"functional_test/test/**/*.{js,coffee}\"",
     "build:watch": "coffee -o lib/ -ctw src/",
     "build": "coffee -o lib/ -ct src/",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
