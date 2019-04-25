@@ -36,7 +36,7 @@ export resolveComponent = (
     
     recurseOverChildren child
 
-proxyResolveComponent = resolveComponent
+proxyResolveComponent = resolveComponent()
 
 export resolveComponents = (resolveComponent = proxyResolveComponent) ->
   (children) ->

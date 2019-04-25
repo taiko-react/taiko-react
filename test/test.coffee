@@ -156,6 +156,12 @@ describe 'Injected code', () ->
         }
       }
       assert.deepEqual (resolveComponent(0) reactChild), expectedChild
+  
+  describe '#resolveComponents', () ->
+    it 'resolves every child', () ->
+      resolveComponent = fake()
+      (resolveComponents resolveComponent) [1, 2, 3]
+      assert.equal resolveComponent.callCount, 3
     
 describe 'Helpers', () ->
   describe '#isValidElement', () ->
