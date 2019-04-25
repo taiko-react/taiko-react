@@ -9,7 +9,8 @@
     "build:watch": "coffee -o lib/ -ctw src/",
     "build": "coffee -o lib/ -ct src/",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
-    "coverage": "nyc npm test && nyc report --reporter=text-lcov > lcov.info"
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov > lcov.info",
+    "prepublishOnly": "npm run build"
   },
   "files": [
     "lib"
