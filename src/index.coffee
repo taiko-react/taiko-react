@@ -2,6 +2,7 @@ import fs from 'fs'
 import { resolveComponent, resolveComponents } from './injected'
 import { maxDepth } from './constants'
 import { isValidElement } from './helpers'
+import Result from './result'
 
 export ID = 'react'
 
@@ -67,16 +68,4 @@ export react = (selector, options = defaultOptions) ->
     awaitPromise: true
   })
 
-  {
-    result: {
-      value = (if options?multiple then [] else {}),
-      type
-    }
-  } = result
-
-  return {
-    exists: () ->
-      if options?.multiple
-      then Boolean value.length
-      else Boolean (Object.keys value).length
-  }
+  return new Result selector, options, result

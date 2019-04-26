@@ -4,6 +4,12 @@
 { clientHandler, react } = require '../lib'
 { resolveComponent, resolveComponents } = require '../lib/injected'
 { isValidElement } = require '../lib/helpers'
+{
+  singleInstanceNotFound,
+  multipleInstancesNotFound,
+  singleInstance,
+  multipleInstances
+} = require './data'
 
 createTaikoInstance = (fakeFunction = fake()) ->
   return {
@@ -55,50 +61,37 @@ describe 'Validation', () ->
 describe 'API', () ->
   describe '#exists', () ->
     it 'checks whether single component exists', () ->
-      clientHandler createTaikoInstance fake.returns {
-        result: {
-          value: {
-            node: {},
-            isFragment: false,
-            state: {},
-            props: {}
-          },
-          type: 'object'
-        }
-      }
+      clientHandler createTaikoInstance fake.returns singleInstance
       assert.isTrue (await react 'Meow').exists()
     
     it 'checks that a single component does not exist', () ->
-      clientHandler createTaikoInstance fake.returns {
-        result: {
-          value: {},
-          type: 'object'
-        }
-      }
+      clientHandler createTaikoInstance fake.returns singleInstanceNotFound
       assert.isFalse (await react 'NoMeow').exists()
 
     it 'checks whether multiple components exist', () ->
-      clientHandler createTaikoInstance fake.returns {
-        result: {
-          value: [{
-            node: {},
-            isFragment: false,
-            state: {},
-            props: {}
-          }],
-          type: 'array'
-        }
-      }
+      clientHandler createTaikoInstance fake.returns multipleInstances
       assert.isTrue (await react 'Meow', { multiple: true }).exists()
     
     it 'checks that multiple components do not exist', () ->
-      clientHandler createTaikoInstance fake.returns {
-        result: {
-          value: [],
-          type: 'array'
-        }
-      }
+      clientHandler createTaikoInstance fake.returns multipleInstancesNotFound
       assert.isFalse (await react 'NoMeow', { multiple: true }).exists()
+  
+  describe '#length', ->
+    it 'reports 0 length when single element does not exist', ->
+      clientHandler createTaikoInstance fake.returns singleInstanceNotFound
+      assert.equal (await react 'Nothing').length(), 0
+    
+    it 'reports length of 1 when single element is found', ->
+      clientHandler createTaikoInstance fake.returns singleInstance
+      assert.equal (await react 'Something').length(), 1
+    
+    it 'reports 0 length when multiple elements do not exist', ->
+      clientHandler createTaikoInstance fake.returns multipleInstancesNotFound
+      assert.equal (await react 'Nothing', { multiple: true }).length(), 0
+    
+    it 'reports the respective length when multiple elements are found', ->
+      clientHandler createTaikoInstance fake.returns multipleInstances
+      assert.equal (await react 'Something', { multiple: true }).length(), 2
 
 describe 'Injected code', () ->
   describe '#resolveComponent', () ->

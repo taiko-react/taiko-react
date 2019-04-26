@@ -45,12 +45,22 @@ const selection = await react(<App />)
 
 ## API
 
-### `.exists()` _~> `Boolean`_
+### `.exists()` _-> `Boolean`_
 
 ```jsx
 const selection = await react(<App />)
 
 assert(selection.exists())
+```
+
+### `.length()` _-> `Number`_
+
+```jsx
+const list = await react(<List />)
+const listItem = await react(<ListItem />, { multiple: true })
+
+assert(list.length() === 1)
+assert(listItem.length() === 3)
 ```
 
 ## Functional tests
