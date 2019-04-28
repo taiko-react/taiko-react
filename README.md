@@ -45,7 +45,7 @@ class App extends React.Component {/* ... */}
 const selection = await react(App)
 ```
 
-### Select using a function
+### Select using a **function**
 
 ```jsx
 const App = () => <div>Hello world!</div>
