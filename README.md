@@ -31,7 +31,7 @@ await goto("http://localhost:8080")
 
 Now you may use various selectors to find React elements on the page 🔎
 
-### Select using a **string** selector
+### Select using a **string**
 
 ```js
 const selection = await react('App')
@@ -39,7 +39,17 @@ const selection = await react('App')
 
 ### Select using a **React component class**
 
-```js
+```jsx
+class App extends React.Component {/* ... */}
+
+const selection = await react(App)
+```
+
+### Select using a function
+
+```jsx
+const App = () => <div>Hello world!</div>
+
 const selection = await react(App)
 ```
 
