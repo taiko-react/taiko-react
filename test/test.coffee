@@ -1,4 +1,4 @@
-{ createElement } = require 'react'
+{ createElement, Component } = require 'react'
 { assert } = require 'chai'
 { fake } = require 'sinon'
 { clientHandler, react } = require '../lib'
@@ -10,6 +10,7 @@
   singleInstance,
   multipleInstances
 } = require './data'
+{ NOT_A_REACT_INSTANCE_OR_COMPONENT } = require '../lib/error-messages'
 
 createTaikoInstance = (fakeFunction = fake()) ->
   return {
@@ -43,8 +44,7 @@ describe 'Validation', () ->
       }
       assert.fail()
     catch error
-      assert.equal error.message,
-      'Could not ascertain the type of this React component'
+      assert.equal error.message, NOT_A_REACT_INSTANCE_OR_COMPONENT
 
   it 'accepts a selector that is a React element', () ->
     assert.doesNotThrow (() -> await react createElement 'Something'),
@@ -57,6 +57,17 @@ describe 'Validation', () ->
     catch error
       assert.equal error.message,
       'Could not ascertain the type of this React component'
+  
+  it 'accepts a selector that is a React Component', ->
+    SomeComponent = ->
+    SomeComponent.prototype = new Component()
+    result = await react SomeComponent
+    assert.equal result.selector, 'SomeComponent'
+  
+  it 'accepts function name as the selector when not an instance of React Component', ->
+    SomeFunction = ->
+    result = await react SomeFunction
+    assert.equal result.selector, 'SomeFunction'
 
 describe 'API', () ->
   describe '#exists', () ->

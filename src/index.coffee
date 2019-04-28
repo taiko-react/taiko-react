@@ -1,8 +1,10 @@
 import fs from 'fs'
+import { Component } from 'react'
 import { resolveComponent, resolveComponents } from './injected'
 import { maxDepth } from './constants'
 import { isValidElement } from './helpers'
 import Result from './result'
+import { NOT_A_REACT_INSTANCE_OR_COMPONENT } from './error-messages'
 
 export ID = 'react'
 
@@ -27,8 +29,16 @@ export react = (selector, options = defaultOptions) ->
   
   if typeof selector is 'string'
     selectorString = selector
-  else if isValidElement selector
-    selectorString = selector.type
+  else if typeof selector is 'function'
+    if selector.prototype instanceof Component
+      selectorString = selector.displayName or selector.name
+    else
+      selectorString = selector.name
+  else if typeof selector is 'object'
+    if isValidElement selector
+      selectorString = selector.type
+    else
+      throw new Error NOT_A_REACT_INSTANCE_OR_COMPONENT
   else
     throw new Error 'Could not ascertain the type of this React component'
   
@@ -68,4 +78,4 @@ export react = (selector, options = defaultOptions) ->
     awaitPromise: true
   })
 
-  return new Result selector, options, result
+  return new Result selectorString, options, result

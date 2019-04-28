@@ -37,7 +37,13 @@ Now you may use various selectors to find React elements on the page 🔎
 const selection = await react('App')
 ```
 
-### Select using a **React component**
+### Select using a **React component class**
+
+```js
+const selection = await react(App)
+```
+
+### Select using a **React component instance**
 
 ```jsx
 const selection = await react(<App />)
@@ -47,6 +53,8 @@ const selection = await react(<App />)
 
 ### `.exists()` _-> `Boolean`_
 
+Checks whether the component exists in the DOM.
+
 ```jsx
 const selection = await react(<App />)
 
@@ -54,6 +62,8 @@ assert(selection.exists())
 ```
 
 ### `.length()` _-> `Number`_
+
+Finds the number of said components in the DOM.
 
 ```jsx
 const list = await react(<List />)
