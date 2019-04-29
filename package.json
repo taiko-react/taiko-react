@@ -17,7 +17,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tkshnwesper/taiko-react.git"
+    "url": "git+https://github.com/taiko-react/taiko-react.git"
   },
   "keywords": [
     "taiko",
@@ -26,9 +26,9 @@
   "author": "Saurabh M. Machave",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/tkshnwesper/taiko-react/issues"
+    "url": "https://github.com/taiko-react/taiko-react/issues"
   },
-  "homepage": "https://github.com/tkshnwesper/taiko-react#readme",
+  "homepage": "https://github.com/taiko-react/taiko-react#readme",
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
