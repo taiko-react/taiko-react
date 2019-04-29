@@ -63,7 +63,7 @@ const selection = await react(<App />)
 
 ### `.exists()` _-> `Boolean`_
 
-Checks whether the component exists in the DOM.
+Checks whether the component exists.
 
 ```jsx
 const selection = await react(<App />)
@@ -73,7 +73,7 @@ assert(selection.exists())
 
 ### `.length()` _-> `Number`_
 
-Finds the number of said components in the DOM.
+Finds the number of said components.
 
 ```jsx
 const list = await react(<List />)
