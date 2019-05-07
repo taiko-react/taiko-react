@@ -1,6 +1,6 @@
 {
   "name": "taiko-react",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "React selectors for Taiko",
   "main": "lib/index.js",
   "scripts": {
