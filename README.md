@@ -48,7 +48,9 @@ const selection = await react(App)
 ### Select using a **function**
 
 ```jsx
-const App = () => <div>Hello world!</div>
+function App() {
+  return <div>Hello world!</div>
+}
 
 const selection = await react(App)
 ```
